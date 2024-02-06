@@ -3,23 +3,36 @@
 
 describe('BankAccount', () => {
   test('should create account with initial balance', () => {
-    // Write your test here
+    const account = getBankAccount(startBalance);
+    expect(account.getBalance()).toBe(startBalance);
   });
 
   test('should throw InsufficientFundsError error when withdrawing more than balance', () => {
-    // Write your test here
+    const account = getBankAccount(startBalance);
+    expect(() => account.withdraw(withdrawing)).toThrowError(
+      InsufficientFundsError,
+    );
   });
 
   test('should throw error when transferring more than balance', () => {
-    // Write your test here
+    const account1 = getBankAccount(startBalance);
+    const account2 = getBankAccount(startBalance);
+    expect(() => account1.transfer(withdrawing, account2)).toThrowError(
+      InsufficientFundsError,
+    );
   });
 
   test('should throw error when transferring to the same account', () => {
-    // Write your test here
+    const account = getBankAccount(startBalance);
+    expect(() => account.transfer(startBalance, account)).toThrowError(
+      TransferFailedError,
+    );
   });
 
   test('should deposit money', () => {
-    // Write your test here
+    const account = getBankAccount(startBalance);
+    account.deposit(littleBalance);
+    expect(account.getBalance()).toBe(startBalance + littleBalance);
   });
 
   test('should withdraw money', () => {
